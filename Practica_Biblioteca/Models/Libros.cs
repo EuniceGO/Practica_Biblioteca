@@ -11,7 +11,7 @@ namespace Practica_Biblioteca.Models
 
         public int AutorId { get; set; }
 
-        public int Categoria_id { get; set; }
+        public int CategoriaId { get; set; }
 
         public string Resumen { get; set; }
     }

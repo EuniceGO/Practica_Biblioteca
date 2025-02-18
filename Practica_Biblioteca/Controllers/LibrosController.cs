@@ -97,7 +97,7 @@ namespace Practica_Biblioteca.Controllers
             equipoActual.Titulo = autorModificar.Titulo;
             equipoActual.AñoPublicacion = autorModificar.AñoPublicacion;
             equipoActual.AutorId = autorModificar.AutorId;
-            equipoActual.Categoria_id = autorModificar.Categoria_id;
+            equipoActual.CategoriaId = autorModificar.CategoriaId;
             equipoActual.Resumen = autorModificar.Resumen;
 
 
@@ -185,7 +185,7 @@ namespace Practica_Biblioteca.Controllers
                                  l.Titulo,
                                  l.AñoPublicacion,
                                  l.AutorId,
-                                 l.Categoria_id,
+                                 l.CategoriaId,
                                  l.Resumen,
                                  a.Nombre
 
@@ -261,7 +261,7 @@ namespace Practica_Biblioteca.Controllers
                                   l.Titulo,
                                   l.AñoPublicacion,
                                   l.AutorId,
-                                  l.Categoria_id,
+                                  l.CategoriaId,
                                   l.Resumen
                               }).FirstOrDefault();
 
