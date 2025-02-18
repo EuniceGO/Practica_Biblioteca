@@ -9,6 +9,6 @@ namespace Practica_Biblioteca.Models
         public string Nombre { get; set; }
         public string Nacionalidad { get; set; }
 
-        public int NombreNome { get; set; }
+       
     }
 }
