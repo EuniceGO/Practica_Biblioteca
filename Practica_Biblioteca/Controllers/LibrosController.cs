@@ -43,7 +43,7 @@ namespace Practica_Biblioteca.Controllers
         {
 
             Libros? autor = (from e in _bibliotecaContexto.libro
-                             where e.id == id
+                             where e.Id == id
                              select e).FirstOrDefault();
 
             if (autor == null)
@@ -82,7 +82,7 @@ namespace Practica_Biblioteca.Controllers
             //Para actualizar un registro, se obtiene el registro original de la base de datos
             //al cual alteraremos alguna propiedad
             Libros? equipoActual = (from e in _bibliotecaContexto.libro
-                                    where e.id == id
+                                    where e.Id == id
                                     select e).FirstOrDefault();
 
             //Verificamos que exista el registro segun su ID
@@ -96,8 +96,8 @@ namespace Practica_Biblioteca.Controllers
             equipoActual.AñoPublicacion = autorModificar.AñoPublicacion;
             equipoActual.Titulo = autorModificar.Titulo;
             equipoActual.AñoPublicacion = autorModificar.AñoPublicacion;
-            equipoActual.autor_id = autorModificar.autor_id;
-            equipoActual.categoria_id = autorModificar.categoria_id;
+            equipoActual.AutorId = autorModificar.AutorId;
+            equipoActual.Categoria_id = autorModificar.Categoria_id;
             equipoActual.Resumen = autorModificar.Resumen;
 
 
@@ -111,12 +111,12 @@ namespace Practica_Biblioteca.Controllers
 
         [HttpDelete]
         [Route("eliminar_Libro/{id}")]
-        public IActionResult EliminarEquipo(int id)
+        public IActionResult EliminarLibro(int id)
         {
             //Para actualizar un registro, se obtiene el registro original de la base de datos
             //al cual eliminaremos
             Libros? equipo = (from e in _bibliotecaContexto.libro
-                              where e.id == id
+                              where e.Id == id
                               select e).FirstOrDefault();
 
             //Verificamos que exista el registro segun su ID
@@ -132,44 +132,13 @@ namespace Practica_Biblioteca.Controllers
             return Ok(equipo);
         }
 
-        // Consulta para obtener todos los libros publicados después del año 2000
-        [HttpGet]
-        [Route("libros_publicados_despues_2000")]
-        public IActionResult ObtenerLibrosPublicadosDespuesDe2000()
-        {
-            var libros = _bibliotecaContexto.libro
-                          .Where(l => l.AñoPublicacion > 2000)
-                          .ToList();
-
-            return Ok(libros);
-        }
-
-        // Consulta para contar cuántos libros ha escrito un autor específico
-        [HttpGet]
-        [Route("contar_libros_por_autor/{autorId}")]
-        public IActionResult ContarLibrosPorAutor(int autorId)
-        {
-            int cantidadLibros = _bibliotecaContexto.libro
-                                .Count(l => l.autor_id == autorId);
-
-            return Ok(new { AutorId = autorId, CantidadLibros = cantidadLibros });
-        }
-
-        // Consulta con paginación en la obtención de libros
-        [HttpGet]
-        [Route("libros_paginados")]
-        public IActionResult ObtenerLibrosPaginados(int pagina = 1, int tamanoPagina = 10)
-        {
-            var libros = _bibliotecaContexto.libro
-                          .Skip((pagina - 1) * tamanoPagina)
-                          .Take(tamanoPagina)
-                          .ToList();
-
-            return Ok(libros);
-        }
+        /// <summary>
+        /// Consultas LINQ
+        /// </summary>
+        /// <returns></returns>
 
         [HttpGet]
-        [Route("LibroById")]
+        [Route("LibroMayores")]
         public IActionResult LibrosMayores()
         {
             var listadoLibros = (from l in _bibliotecaContexto.libro
@@ -190,7 +159,7 @@ namespace Practica_Biblioteca.Controllers
         public IActionResult Contar(int id)
         {
             var listadoLibros = (from l in _bibliotecaContexto.libro
-                                 where l.autor_id == id
+                                 where l.AutorId == id
                                  select l).Count();
 
             if (listadoLibros == 0)
@@ -208,15 +177,15 @@ namespace Practica_Biblioteca.Controllers
         {
             var AutorById = (from l in _bibliotecaContexto.libro
                              join a in _bibliotecaContexto.autor
-                             on l.autor_id equals a.Id
+                             on l.AutorId equals a.Id
                              where l.Titulo == titulo
                              select new
                              {
-                                 l.id,
+                                 l.Id,
                                  l.Titulo,
                                  l.AñoPublicacion,
-                                 l.autor_id,
-                                 l.categoria_id,
+                                 l.AutorId,
+                                 l.Categoria_id,
                                  l.Resumen,
                                  a.Nombre
 
@@ -284,15 +253,15 @@ namespace Practica_Biblioteca.Controllers
         public IActionResult PrimerLibro(int id)
         {
             var listaLibro = (from l in _bibliotecaContexto.libro
-                              where l.autor_id == id
+                              where l.AutorId == id
                               orderby l.AñoPublicacion ascending
                               select new
                               {
-                                  l.id,
+                                  l.Id,
                                   l.Titulo,
                                   l.AñoPublicacion,
-                                  l.autor_id,
-                                  l.categoria_id,
+                                  l.AutorId,
+                                  l.Categoria_id,
                                   l.Resumen
                               }).FirstOrDefault();
 
